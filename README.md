@@ -1,7 +1,7 @@
 # ConnectorGenerator
 
 <p align="left">
-  <img src="https://raw.githubusercontent.com/JeroenBL/ConnectorGenerator/main/logo.png" width="500">
+  <img src="https://raw.githubusercontent.com/JeroenBL/ConnectorGenerator/main/logo.png" width="300">
 </p>
 
 ## Table of contents
@@ -11,12 +11,13 @@
   - [Introduction](#introduction)
   - [Used libraries](#used-libraries)
   - [Using the _ConnectorGenerator_ VSCode extension](#using-the-connectorgenerator-vscode-extension)
+    - [Create a new _GitHub_ token](#create-a-new-github-token)
+    - [Set the token](#set-the-token)
     - [Create a new connector](#create-a-new-connector)
       - [From the command palette](#from-the-command-palette)
       - [From the context menu](#from-the-context-menu)
     - [Code snippets](#code-snippets)
       - [Using snippets](#using-snippets)
-  - [Other useful VSCode extensions](#other-useful-vscode-extensions)
   - [Contributing](#contributing)
     - [Bug report](#bug-report)
     - [Feature request](#feature-request)
@@ -39,6 +40,23 @@ The following libraries are used in this extension:
 | Axios   | `1.6.5` | https://www.npmjs.com/package/axios |
 
 ## Using the _ConnectorGenerator_ VSCode extension
+
+### Create a new _GitHub_ token
+
+1. Browse to [`Developer settings`.](https://github.com/settings/tokens)
+2. Click on `Generate new token`.
+3. Select `Generate new token (classic)`.
+4. Give your token a clear `Note`.
+5. Set the expiration to `60` days.
+6. __Only__ check the `repo (Full control of private repositories)` scope.
+7. Click `Generate token`.
+8. Make sure to __securely__ save your token.
+
+### Set the token
+
+1. Open the command palette by clicking on `View -> Command palette` or press `ctrl+shift+p` (`cmd+shift+p` on mac).
+2. Browse to `Set ConnectorGenerator GitHub accessToken`.
+3. Specify your _GitHub_ token and press `enter`.
 
 ### Create a new connector
 
@@ -72,30 +90,16 @@ The _ConnectorGenerator_ VSCode extension also adds a few useful code snippets s
 | APIKey authentication          | - Code snippet for fixed APIKey authentication.<br> - Based on `$actionContext.Configuration.APIKey`.                                                                                                                                                                                       |
 | OAuth2 authentication          | - Code snippet for authentication using OAuth2.<br> - Includes both a `POST` in order to retrieve the token and and example `GET` for using the token.<br> - Based on `$actionContext.Configuration.ClientId` and `$actionContext.Configuration.ClientSecret`.                              |
 | Session authentication         | - Code snippet for authentication using a _cookie_ stored in a _session_ variable.<br> - Includes both a `POST` in order to retrieve the cookie and example `GET` for using the cookie.<br> - Based on `$actionContext.Configuration.UserName` and `$actionContext.Configuration.Password`. |
-| Filter contracts in scope      | - Code snippet that filters `$personContext.Person.Contracts`.                                                                                                                                                                                                                              |
-
+| Filter contracts in scope      | - Code snippet that filters `$personContext.Person.Contracts`.
+| Ignore SSL certificate check   | - Code snippet for ignoring the SSL certificate check. |
+| Create immutable object        | - Code snippet for creating an immutable object using a closure. |
+| Cloud usage for a *.pfx certificate | - Code snippet on how to use a *.pfx certificate within cloud PowerShell. |                                                                                                                                                                                                                      |
 #### Using snippets
 
 Snippets are accessible from any _PowerShell_ script either by:
 
 - The snippet identifier _ConnectorGenerator_
-- Using the snippet hotkey `ctrl+spacebar` (`cmd+spacebar` on mac) and browse to `ConnectorGenerator`
-
-## Other useful VSCode extensions
-
-There are several useful VSCode extensions that can be helpful when building PowerShell connectors. Here are a few examples:
-
-- __PowerShell__<br>https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell<br>
-The PowerShell extension provides a rich set of features for PowerShell development, including syntax highlighting, code snippets, IntelliSense, and more. This extension can be incredibly helpful when building PowerShell connectors, as it provides an efficient and intuitive environment for writing, testing, and debugging PowerShell code.
-
-- __Code Spell Checker__<br>https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker<br>
-This extension checks the spelling of words in your code and comments, ensuring that everything is spelled correctly and improving the readability and professionalism of your code.
-
-- __GitHub Markdown Preview__<br>https://marketplace.visualstudio.com/items?itemName=bierner.github-markdown-preview<br>
-With GitHub Markdown Preview, you can see exactly how your documentation will look when published to GitHub, ensuring that it is clear, concise, and easy to read. This can be particularly useful when documenting your PowerShell connector code, as it allows you to create professional-looking documentation that is easy to understand and follow.
-
-- __ByeByeSecret__<br>https://github.com/JeroenBL/ByeByeSecret<br>
-ByeByeSecret is a VSCode extension that actively scans your PowerShell code for potential secrets by identifying variables that may hold confidential information. It then notifies you with a visual alert.
+- Using the snippet hotkey `ctrl+spacebar` and browse to `ConnectorGenerator`
 
 ## Contributing
 
