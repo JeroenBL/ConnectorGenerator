@@ -1,3 +1,5 @@
+![Total downloads (specific asset, latest release)](https://img.shields.io/github/downloads/JeroenBL/ConnectorGenerator/latest/connectorgenerator.vsix)
+
 # ConnectorGenerator
 
 <p align="left">
