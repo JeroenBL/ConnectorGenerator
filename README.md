@@ -1,7 +1,6 @@
 ![Total downloads (specific asset, latest release)](https://img.shields.io/github/downloads/JeroenBL/ConnectorGenerator/latest/connectorgenerator-1.0.0.vsix?label=Total%20downloads)
 ![GitHub Tag](https://img.shields.io/github/v/tag/jeroenbl/connectorgenerator?label=Latest%20release&color=0a6cd8)
 
-
 # ConnectorGenerator
 
 <p align="left">
@@ -16,8 +15,6 @@
   - [Features](#features)
   - [Used libraries](#used-libraries)
   - [Using the _ConnectorGenerator_ VSCode extension](#using-the-connectorgenerator-vscode-extension)
-    - [Create a new _GitHub_ token](#create-a-new-github-token)
-    - [Set the token](#set-the-token)
     - [Create a new connector](#create-a-new-connector)
       - [From the command palette](#from-the-command-palette)
       - [From the context menu](#from-the-context-menu)
@@ -39,6 +36,8 @@ If you're looking to create a new target connector for HelloID provisioning and 
 
 This _ConnectorGenerator_ extension for VSCode is the perfect starting point for building out your new connector, with all the essential resources you'll need to get started.
 
+If you're a new to the templates and the _ConnectorGenerator_ refer to the [QuickStart](https://jeroenbl.github.io/helloid/templates-quickStart/) to help you get started.
+
 ## Features
 
 - [Create a new target connector for HelloID provisioning.](#create-a-new-connector)
@@ -56,23 +55,6 @@ The following libraries are used in this extension:
 
 ## Using the _ConnectorGenerator_ VSCode extension
 
-### Create a new _GitHub_ token
-
-1. Browse to [`Developer settings`.](https://github.com/settings/tokens)
-2. Click on `Generate new token`.
-3. Select `Generate new token (classic)`.
-4. Give your token a clear `Note`.
-5. Set the expiration to `60` days.
-6. __Only__ check the `repo (Full control of private repositories)` scope.
-7. Click `Generate token`.
-8. Make sure to __securely__ save your token.
-
-### Set the token
-
-1. Open the command palette by clicking on `View -> Command palette` or press `ctrl+shift+p` (`cmd+shift+p` on mac).
-2. Browse to `Set ConnectorGenerator GitHub accessToken`.
-3. Specify your _GitHub_ token and press `enter`.
-
 ### Create a new connector
 
 #### From the command palette
@@ -89,7 +71,7 @@ The following libraries are used in this extension:
 2. Click on `ConnectorGenerator -> Create new HelloID connector project scaffolding`.
 3. Select the connector type `target`.
 4. Enter a name for the connector.
-5. Browse to the location where you want the files to be created and press `enter`
+5. Browse to the location where you want the files to be created and press `enter`.
 
 >❗The source connector templates are currently not available.
 
@@ -108,13 +90,15 @@ The _ConnectorGenerator_ VSCode extension also adds a few useful code snippets s
 | Filter contracts in scope      | - Code snippet that filters `$personContext.Person.Contracts`.
 | Ignore SSL certificate check   | - Code snippet for ignoring the SSL certificate check. |
 | Create immutable object        | - Code snippet for creating an immutable object using a closure. |
-| Cloud usage for a *.pfx certificate | - Code snippet on how to use a *.pfx certificate within cloud PowerShell. |                                                                                                                                                                                                                      |
+| Cloud usage for a *.pfx certificate | - Code snippet on how to use a *.pfx certificate within cloud PowerShell. |
+| Compare objects and prepare for update | - Code snippet that compares the `$actionContext.Data` with `$correlatedAccount`. Changed properties are added to a new hashtable that can be used in a JSON payload. |
+
 #### Using snippets
 
 Snippets are accessible from any _PowerShell_ script either by:
 
-- The snippet identifier _ConnectorGenerator_
-- Using the snippet hotkey `ctrl+spacebar` and browse to `ConnectorGenerator`
+- The snippet identifier _ConnectorGenerator_.
+- Using the snippet hotkey `ctrl+spacebar` and browse to `ConnectorGenerator`.
 
 ### Tools4ever color themes
 
@@ -124,12 +108,12 @@ The extension comes with two _Tools4ever_ color themes.
 
 #### Set a theme
 
-1. Color Theme picker by clicking on `File > Preferences > Theme > Color Theme` or press `ctrl+k & ctrl+t`. (`cmd+k cmd+t` on mac).
+1. Color Theme picker by clicking on `File > Preferences > Theme > Color Theme` or press `ctrl+k & ctrl+t`. (`cmd+k & cmd+t` on mac).
 2. Select the theme you want and press `Enter`.
 
 ### Detecting variables holding sensitive information
 
-A new feature in release `0.9.0` is the option to detect variables holding sensitive information. The potentially _unsafe_ variable clearly stands out from other variables.
+To prevent uploading secrets _ConnectorGenerator_ actively scans for variables that might contain sensitive information. Potentially unsafe variables will marked _red_ to make them stand out.
 
 ![detect](https://raw.githubusercontent.com/JeroenBL/ConnectorGenerator/main/detect.png)
 
