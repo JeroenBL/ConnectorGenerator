@@ -112,7 +112,7 @@ The extension comes with two _Tools4ever_ color themes.
 
 To prevent uploading secrets _ConnectorGenerator_ actively scans for variables that might contain sensitive information. Potentially unsafe variables will marked _red_ to make them stand out.
 
-![detect](https://raw.githubusercontent.com/JeroenBL/ConnectorGenerator/main/detect.png)
+![detect](https://raw.githubusercontent.com/JeroenBL/ConnectorGenerator/main/assets/detect.png)
 
 ## Contributing
 
