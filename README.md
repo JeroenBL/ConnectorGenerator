@@ -1,6 +1,3 @@
-![Total downloads (specific asset, latest release)](https://img.shields.io/github/downloads/JeroenBL/ConnectorGenerator/latest/connectorgenerator-1.0.0.vsix?label=Total%20downloads)
-![GitHub Tag](https://img.shields.io/github/v/tag/jeroenbl/connectorgenerator?label=Latest%20release&color=0a6cd8)
-
 # ConnectorGenerator
 
 <p align="left">
@@ -51,7 +48,7 @@ The following libraries are used in this extension:
 
 | Library | Version | URL                                 |
 | ------- | ------- | ----------------------------------- |
-| Axios   | `1.6.5` | https://www.npmjs.com/package/axios |
+| Axios   | `1.6.8` | https://www.npmjs.com/package/axios |
 
 ## Using the _ConnectorGenerator_ VSCode extension
 
@@ -134,4 +131,3 @@ To request a new feature, create a new issue using the same process as for a bug
 ### Code changes
 
 If you would like to contribute code changes, you can do so by creating a pull request on the repository. Be sure to fork the repository and create a new branch for your changes. Once you have made your changes, create a pull request and describe the changes you have made and why they are necessary. Your changes will be reviewed by the development team, and if accepted, merged into the main branch of the repository.
-
