@@ -18,15 +18,15 @@
     - [Create a new connector](#create-a-new-connector)
       - [From the command palette](#from-the-command-palette)
       - [From the context menu](#from-the-context-menu)
+    - [Caching](#caching)
     - [Code snippets](#code-snippets)
       - [Using snippets](#using-snippets)
-    - [Tools4ever color themes](#tools4ever-color-themes)
-      - [Set a theme](#set-a-theme)
+      - [Updating the cache](#updating-the-cache)
     - [Detecting variables holding sensitive information](#detecting-variables-holding-sensitive-information)
+    - [Development features](#development-features)
   - [Contributing](#contributing)
     - [Bug report](#bug-report)
     - [Feature request](#feature-request)
-    - [Code changes](#code-changes)
 
 ## Introduction
 
@@ -40,10 +40,12 @@ If you're a new to the templates and the _ConnectorGenerator_ refer to the [Quic
 
 ## Features
 
-- [Create a new target connector for HelloID provisioning.](#create-a-new-connector)
-- [PowerShell code snippets.](#code-snippets)
-- [Tools4ever color themes.](#tools4ever-color-themes)
-- [Possibility to detect variables holding sensitive information.](#detecting-variables-holding-sensitive-information)
+| Feature                                      | Remarks |
+|----------------------------------------------|---------|
+| [Create a new target connector for HelloID provisioning.](#create-a-new-connector) | Enables users to generate a HelloID connector with predefined scaffolding. |
+| [PowerShell code snippets.](#code-snippets) | Provides reusable PowerShell code snippets to streamline development. |
+| [Option to detect variables holding sensitive information.](#detecting-variables-holding-sensitive-information) | Scans PowerShell scripts for potential secrets and warns the user. __This feature is enabled by default__. |
+| [Development features](#development-features) | Enables development features. Useful when making changes to the templates. __This feature is disabled by default__. |
 
 ## Used libraries
 
@@ -51,7 +53,7 @@ The following libraries are used in this extension:
 
 | Library | Version | URL                                 |
 | ------- | ------- | ----------------------------------- |
-| Axios   | `1.6.8` | https://www.npmjs.com/package/axios |
+| Axios   | `1.7.7` | https://www.npmjs.com/package/axios |
 
 ## Using the _ConnectorGenerator_ VSCode extension
 
@@ -67,55 +69,69 @@ The following libraries are used in this extension:
 
 #### From the context menu
 
+> Only available when a new file (can be of any type) is opened.
+
 1. Right click to open the context menu.
 2. Click on `ConnectorGenerator -> Create new HelloID connector project scaffolding`.
 3. Select the connector type `target`.
 4. Enter a name for the connector.
 5. Browse to the location where you want the files to be created and press `enter`.
 
->❗The source connector templates are currently not available.
+> The source connector templates are currently not available.
+
+### Caching
+
+When creating a new connector based of the template, the latest release will be downloaded from: https://github.com/Tools4everBV/HelloID-Conn-Prov-Target-V2-Template/releases. The zip file will be unpacked and saved to in user folder using the latest release version as the folderName.
+
+  - __Windows__: `C:\Users\<username>\<vscode-version>\extensions\connectorteam.connectorgenerator-<version>/cache`
+  - __macOS__: `~/.vscode/extensions/connectorteam.connectorgenerator-<version>/cache`
+  - __Linux__: `~/.vscode/extensions/connectorteam.connectorgenerator-<version>/cache`
+
+The latest will only be donwloaded in case the locally cached version is __older__ then the latest version available on GitHub.
 
 ### Code snippets
 
-The _ConnectorGenerator_ VSCode extension also adds a few useful code snippets specifically for PowerShell. Currently the following snippets are available:
+From version `1.2.0` Code snippets can be retrieved directly from the context menu: `ConnectorGenerator -> Retrieve code snippets` or from the command palette. Code snippets are retrieved from our [_helper_ repository on _GitHub_](https://github.com/Tools4everBV/HelloID-Lib-Prov-HelperFunctions/tree/main/PowerShell/Scripts) and cached locally in your user directory.
 
-| Snippet                        | Description                                                                                                                                                                                                                                                                                 |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Add TLS 1.2                    | - Code snippet that adds support for TLS 1.2                                                                                                                                                                                                                                                |
-| Convert body to UTF-8          | - Code snippet that converts a JSON body to UTF-8.                                                                                                                                                                                                                                          |
-| Basic authentication           | - Code snippet for basic authentication.<br> - Based on `$actionContext.Configuration.UserName` and `$actionContext.Configuration.Password`.                                                                                                                                                |
-| APIKey authentication          | - Code snippet for fixed APIKey authentication.<br> - Based on `$actionContext.Configuration.APIKey`.                                                                                                                                                                                       |
-| OAuth2 authentication          | - Code snippet for authentication using OAuth2.<br> - Includes both a `POST` in order to retrieve the token and and example `GET` for using the token.<br> - Based on `$actionContext.Configuration.ClientId` and `$actionContext.Configuration.ClientSecret`.                              |
-| Session authentication         | - Code snippet for authentication using a _cookie_ stored in a _session_ variable.<br> - Includes both a `POST` in order to retrieve the cookie and example `GET` for using the cookie.<br> - Based on `$actionContext.Configuration.UserName` and `$actionContext.Configuration.Password`. |
-| Filter contracts in scope      | - Code snippet that filters `$personContext.Person.Contracts`.
-| Ignore SSL certificate check   | - Code snippet for ignoring the SSL certificate check. |
-| Create immutable object        | - Code snippet for creating an immutable object using a closure. |
-| Cloud usage for a *.pfx certificate | - Code snippet on how to use a *.pfx certificate within cloud PowerShell. |
-| Compare objects and prepare for update | - Code snippet that compares the `$actionContext.Data` with `$correlatedAccount`. Changed properties are added to a new hashtable that can be used in a JSON payload. |
+  - __Windows__: `C:\Users\<username>\<vscode-version>\extensions\connectorteam.connectorgenerator-<version>/cache/snippets.json`
+  - __macOS__: `~/.vscode/extensions/connectorteam.connectorgenerator-<version>/cache/snippets.json`
+  - __Linux__: `~/.vscode/extensions/connectorteam.connectorgenerator-<version>/cache/snippets.json`
 
 #### Using snippets
 
-Snippets are accessible from any _PowerShell_ script either by:
+In order to use a code snippet:
 
-- The snippet identifier _ConnectorGenerator_.
-- Using the snippet hotkey `ctrl+spacebar` and browse to `ConnectorGenerator`.
+1. Select a snippet from the list and click the arrow button to expand.
+2. Click `Copy` to copy the snippet to the clipboard.
 
-### Tools4ever color themes
+#### Updating the cache
 
-The extension comes with two _Tools4ever_ color themes.
-  - Tools4ever-Dark
-  - Tools4ever-Light
-
-#### Set a theme
-
-1. Color Theme picker by clicking on `File > Preferences > Theme > Color Theme` or press `ctrl+k & ctrl+t`. (`cmd+k & cmd+t` on mac).
-2. Select the theme you want and press `Enter`.
+The snippets cache can __only be updated manually__ by clicking: `Refresh snippet cache` from the status bar.
 
 ### Detecting variables holding sensitive information
 
 To prevent uploading secrets _ConnectorGenerator_ actively scans for variables that might contain sensitive information. Potentially unsafe variables will marked _red_ to make them stand out.
 
-![detect](https://raw.githubusercontent.com/JeroenBL/ConnectorGenerator/main/assets/detect.png)
+To disable this feature:
+
+1. Open the VSCode settings windows by clicking on: `ctrl + ,` or (`cmd + ,` on macOs).
+2. Type: `connectorgenerator` to go to the section for this extension.
+3. Make sure to toggle: `Enable Secret Scanning`.
+
+### Development features
+
+If you wish to extend or modify the template, you can do so by creating a new folder in the cache folder. Make sure the name of the new folder adheres to [semver](https://semver.org/).
+
+To create a connector based of your updated version:
+
+1. Open the VSCode settings windows by clicking on: `ctrl + ,` or (`cmd + ,` on macOs).
+3. Type: `connectorgenerator` to go to the section for this extension.
+2. Make sure to toggle: `Enable Version Selection For Development Purposes`.
+
+This will enable two features:
+
+- Quikly open the cache folder from the status bar by clicking on: `Open cache folder`.
+- Option to select a template version when you create a new connector.
 
 ## Contributing
 
@@ -130,7 +146,3 @@ To submit a new issue, navigate to the `Issues` tab on the repository page and c
 🚀
 
 To request a new feature, create a new issue using the same process as for a bug report. Be sure to describe the feature you would like to see added, and explain how it would improve your experience.
-
-### Code changes
-
-If you would like to contribute code changes, you can do so by creating a pull request on the repository. Be sure to fork the repository and create a new branch for your changes. Once you have made your changes, create a pull request and describe the changes you have made and why they are necessary. Your changes will be reviewed by the development team, and if accepted, merged into the main branch of the repository.
