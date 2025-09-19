@@ -1,6 +1,6 @@
 # ConnectorGenerator
 
-![Total downloads (specific asset, latest release)](https://img.shields.io/github/downloads/JeroenBL/ConnectorGenerator/latest/connectorgenerator-2.2.0.vsix?label=Total%20downloads)
+![Total downloads (specific asset, latest release)](https://img.shields.io/github/downloads/JeroenBL/ConnectorGenerator/latest/connectorgenerator-2.4.0.vsix?label=Total%20downloads)
 ![GitHub Tag](https://img.shields.io/github/v/tag/jeroenbl/connectorgenerator?label=Latest%20release&color=0a6cd8)
 
 <p align="left">
@@ -23,6 +23,10 @@
       - [Using snippets](#using-snippets)
       - [Updating the cache](#updating-the-cache)
     - [Detecting variables holding sensitive information](#detecting-variables-holding-sensitive-information)
+    - [Highlighting HelloID specific variables](#highlighting-helloid-specific-variables)
+    - [Advanded error diagnostics](#advanded-error-diagnostics)
+    - [Adding connector templates files](#adding-connector-templates-files)
+    - [Change the FieldMapping systemGUID to the systemName](#change-the-fieldmapping-systemguid-to-the-systemname)
     - [Development features](#development-features)
   - [Contributing](#contributing)
     - [Bug report](#bug-report)
@@ -44,7 +48,11 @@ If you're a new to the templates and the _ConnectorGenerator_ refer to the [Quic
 |----------------------------------------------|---------|
 | [Create a new target connector for HelloID provisioning.](#create-a-new-connector) | Enables users to generate a HelloID connector with predefined scaffolding. |
 | [PowerShell code snippets.](#code-snippets) | Provides reusable PowerShell code snippets to streamline development. |
-| [Option to detect variables holding sensitive information.](#detecting-variables-holding-sensitive-information) | Scans PowerShell scripts for potential secrets and warns the user. __This feature is enabled by default__. |
+| [Detect variables holding sensitive information.](#detecting-variables-holding-sensitive-information) | Scans PowerShell scripts for potential secrets and warns the user. __This feature is enabled by default__. |
+| [Code highligting for HelloID specific variables.](#highlighting-helloid-specific-variables) | highlighting for HelloID variables like `$actionContext` and `$outputContext` in .ps1 files. __This feature is enabled by default__. |
+| [Advanced error diagnostics.](#advanded-error-diagnostics) | Error diagnostics for unassigned `Invoke-RestMethod` and `Invoke-WebRequest` calls in PowerShell scripts. |
+| [Adding connector templates files.](#adding-connector-templates-files) | Add connector templates files using the context menu allowing you to easy extend an already existing connector. |
+| [Change the FieldMapping systemGUID to the systemName.](#change-the-fieldmapping-systemguid-to-the-systemname) | Allows you to easy change the systemGUID to the systemName. |
 | [Development features](#development-features) | Enables development features. Useful when making changes to the templates. __This feature is disabled by default__. |
 
 ## Used libraries
@@ -118,6 +126,48 @@ To disable this feature:
 2. Type: `connectorgenerator` to go to the section for this extension.
 3. Make sure to toggle: `Enable Secret Scanning`.
 
+### Highlighting HelloID specific variables
+
+HelloID specific variables like `$actionContext` and `$outputContext` can be highlighted. Hovering above the variable will display an information window and containing the link to documentation.
+
+To enable this feature:
+
+1. Open the VSCode settings windows by clicking on: `ctrl + ,` or (`cmd + ,` on macOs).
+2. Type: `connectorgenerator` to go to the section for this extension.
+3. Make sure to toggle: `Enable HelloID variable highlight`.
+
+### Advanded error diagnostics
+
+With PowerShell, most __cmdlets__ write their output to the output stream. However, in HelloID this is not supported as all output should be written to the `$outputContext`. Therefore, __cmdlets__ like `Invoke-RestMethod` should always be assigned to a variable or outputted to `$null`. The _ConnectorGenerator_ checks __cmdlets__ for potential unwanted output in the output stream.
+
+> Currently, this feature cannot be disabled.
+
+### Adding connector templates files
+
+From version `2.3.0` its possible to add connector templates files using the context menu allowing you to easy extend an already existing connector.
+
+To add a template file:
+
+1. In the __explorer__ window, click right to open the context menu.
+2. Select `add connector template file`.
+3. Select the template you wish to add.
+
+> Missing folders will automatically be created!
+
+![addTemplate](https://raw.githubusercontent.com/JeroenBL/ConnectorGenerator/refs/heads/main/assets/addTemplateFile.gif)
+
+### Change the FieldMapping systemGUID to the systemName
+
+If you're fieldmapping uses account data from other systems, when exported, the JSON contains a _GUID_ instead of the system name. This will manually need to be resolved. To make this easier, the extension provides the option to change the _GUID_ to the system name.
+
+1. In the __explorer__ window, select the `fieldMapping.json`.
+2. Right to open the context menu.
+3. Select `replace field mapping system name`.
+
+![fieldMapping](https://raw.githubusercontent.com/JeroenBL/ConnectorGenerator/refs/heads/main/assets/fieldMapping.gif)
+
+> Currently, only the `MicrosoftActiveDirectory` system name is supported.
+
 ### Development features
 
 If you wish to extend or modify the template, you can do so by creating a new folder in the cache folder. Make sure the name of the new folder adheres to [semver](https://semver.org/).
@@ -132,6 +182,8 @@ This will enable two features:
 
 - Quikly open the cache folder from the status bar by clicking on: `Open cache folder`.
 - Option to select a template version when you create a new connector.
+
+> Note that, with this feature `enabled` __new templates__ will __not__ be __downloaded__ from the GitHub repository. Instead, the __local cache__ is __always__ used as the __primary source__.
 
 ## Contributing
 
