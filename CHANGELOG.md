@@ -78,9 +78,6 @@ documented here. Format loosely follows [Keep a Changelog](https://keepachangelo
   now sourced entirely from the spec digest and `endpoints.md`.
 
 ### Removed
-- Separate "ticket aanmaken" step from the intake pipeline diagram —
-  ticket registration is now implicit in the initial TopDesk request
-  step.
 - `connector-writer` subagent reference (superseded by `developer`,
   then removed entirely with the subagent architecture).
 
@@ -90,5 +87,3 @@ documented here. Format loosely follows [Keep a Changelog](https://keepachangelo
   than generate those actions until they're written.
 - No CI integration yet (PSScriptAnalyzer/Pester run manually or via
   the skill, not on pull request).
-- TopDesk → Git-issue linking mechanism not yet decided (manual vs.
-  API-based).
